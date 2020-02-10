@@ -30,3 +30,11 @@ Once you have the cli tools installed, compiling and running rust files is as ea
 rustc hello-world.rs
 ./hello-world
 ```
+
+Or, for the other projects with multiple files, it's just easier to use cargo.
+E.G.: for "guessing-game", run the following:
+
+```bash
+cd guessing-game
+cargo run
+```
