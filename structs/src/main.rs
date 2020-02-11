@@ -26,6 +26,21 @@ struct Rectangle {
     bottom_right: Point,
 }
 
+impl Rectangle {
+    // This is an instance method
+    // `&self` is sugar for `self: &Self`, where `Self` is the type of the
+    // caller object. In this case `Self` = `Rectangle`
+    fn area(&self) -> f64 {
+        // `self` gives access to the struct fields via the dot operator
+        let Point { x: x1, y: y1 } = self.top_left;
+        let Point { x: x2, y: y2 } = self.bottom_right;
+
+        // `abs` is a `f64` method that returns the absolute value of the
+        // caller
+        ((x1 - x2) * (y1 - y2)).abs().into()
+    }
+}
+
 fn main() {
     // Create struct with field init shorthand
     let name = "Peter";
@@ -58,6 +73,8 @@ fn main() {
         top_left: Point { x: left_edge, y: top_edge },
         bottom_right: bottom_right,
     };
+
+    println!("Area of the triangle is {}", _rectangle.area());
 
     // Instantiate a unit struct
     let _nil = Nil;
