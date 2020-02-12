@@ -22,6 +22,10 @@ use std::io::Read;
 fn count_routes_rec(x: i32, y: i32) -> i32 {
     if x == 0 || y == 0 {
         return 1;
+    } else if x == 1 {
+        return y + 1;
+    } else if y == 1 {
+        return x + 1;
     }
     return count_routes_rec(x-1, y) + count_routes_rec(x, y-1);
 }
