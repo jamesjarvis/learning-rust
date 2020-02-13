@@ -1,94 +1,48 @@
 use std::io;
 use std::io::Read;
-// use std::cmp;
 
-// fn plusplus(x: i32) -> i32{
-//     if x == 0 {
-//         return 0;
-//     }
-//     return x + plusplus(x-1);
-// }
+fn notnice(x: u64, y: u64) -> u64 {
+    let mut array = vec![vec![0u64; (y+1) as usize]; (x+1) as usize];
 
-// fn fac(n: f64) -> f64 {
-//     if n == 0.0 {
-//         return 0.0;
-//     }
-//     if n == 1.0 {
-//         return 1.0;
-//     }
-//     return n * fac(n-1.0);
-// }
+    // println!("x, y = {}, {}", x, y);
 
-fn count_routes_rec(x: i32, y: i32) -> i32 {
-    if x == 0 || y == 0 {
-        return 1;
-    } else if x == 1 {
-        return y + 1;
-    } else if y == 1 {
-        return x + 1;
+    array[0][0] = 1;
+    for i in 0usize..=(x as usize) {
+        for j in 0usize..=(y as usize) {
+            if i > 0 {
+                array[i][j]+= array[i-1][j];
+            }
+            if j > 0 {
+                array[i][j]+= array[i][j-1];
+            }
+            array[i][j] = array[i][j] % 1000;
+            // println!("{},{} = {}",i, i, array[i][j]);
+        }
     }
-    return count_routes_rec(x-1, y) + count_routes_rec(x, y-1);
+    // println!("array shit = {}", array[(x) as usize][(y) as usize]);
+    return array[(x) as usize][(y) as usize];
 }
+ 
+
+
 
 // Enter your code here.
 fn count_routes(mut x: i32, mut y: i32) -> i32 {
-    // Fix issues with negatives
-    // if x < 0 && y < 0 {
-    //     x = x.abs();
-    //     y = y.abs();
-    // } else if x < 0 && x ==  {
 
-    // }
+    if x == 0 || y == 0 {
+        return 1;
+    }
 
 
-    x = x.abs();
-    // let xn = f64::from(x.abs());
-    y = y.abs();
-    // let yn = f64::from(y.abs());
+    let xn = x.abs() as u64;
 
-    let count = count_routes_rec(x, y);
+    let yn = y.abs() as u64;
 
-    return count % 1000;
-    // if x == 0 || y == 0 {
-    //     return 1;
-    // }
+    let facboi = notnice(xn, yn);
 
-    // println!("x: {}, y:{}", x, y);
-
-    // let facx = fac(xn);
-    // let facy = fac(yn);
-    // let facxy = fac(xn + yn);
-
-    // println!("{}, {}, {}", facx, facy, facxy);
-
-    // // return facxy / (facx * facy);
-    // return 0;
-
-    // Alright alright, this seems to be binomial coefficient
-    
-    // if x == 0 || y == 0 {
-    //     return 1;
-    // }
-    // return count_routes(x-1, y) + count_routes(x, y-1); 
-
-
-
-    // let mut count = 0;
-    // // Simple paths (with only 1 change) are x + y
-    // let simple_paths = x + y;
-    // // count += simple_paths;
-    // // count - 1;
-
-    // for _xi in 1..x.abs()+1 {
-    //     for _yi in 1..y.abs()+1 {
-    //         count += 1;
-    //     }
-    // }
-
-    // return count;
-
-    // 
+    return (facboi % 1000) as i32;
 }
+
 fn main() {
     let mut input = String::new();
     io::stdin().read_to_string(&mut input).unwrap();
